@@ -1,0 +1,5 @@
+# .gitignore
+docker/db/
+.env
+serviceAccountKey.json
+app/tmp/*

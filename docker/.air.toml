@@ -1,0 +1,18 @@
+# .air.toml
+[build]
+  cmd = "go build -o /bin/main ."
+  bin = "/bin/main"
+  include_ext = ["go", "tmpl", "html"]
+  exclude_dir = ["vendor", "node_modules", "public", "tmp"]
+  delay = 1000
+
+[watch]
+  stop_signal = "SIGTERM"
+  kill_delay = 5000
+
+[log]
+  level = "info"
+
+[watcher]
+  use_polling = true
+  interval = 1000

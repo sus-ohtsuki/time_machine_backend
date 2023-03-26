@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    expose:
+      - "3000:8080"
+    volumes:
+      - ../app:/app
+      - go-modules:/app/go/pkg/mod
+    depends_on:
+      - db
+    environment:
+      POSTGRES_USER: "test_admin"
+      POSTGRES_PASSWORD: "password"
+      POSTGRES_DB: "test_tmm_db"
+  db:
+    image: "postgres:13-alpine"
+    environment:
+      POSTGRES_USER: "test_admin"
+      POSTGRES_PASSWORD: "password"
+      POSTGRES_DB: "test_tmm_db"
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    expose:
+      - "5432"
+  nginx:
+    image: "nginx:1.21"
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - app
+
+volumes:
+  go-modules:
